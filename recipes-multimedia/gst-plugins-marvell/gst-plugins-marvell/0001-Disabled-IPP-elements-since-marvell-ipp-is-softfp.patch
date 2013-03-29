@@ -1,0 +1,24 @@
+From 7ae68ed3aa6c763b9f2794277212f8f8835631f3 Mon Sep 17 00:00:00 2001
+From: Carlos Rafael Giani <dv@pseudoterminal.org>
+Date: Tue, 26 Mar 2013 23:05:49 +0100
+Subject: [PATCH] Disabled IPP elements, since marvell-ipp is softfp
+
+Change-Id: Ie6a52e437434ea8edaf137545ab9105fdb962af0
+Signed-off-by: Carlos Rafael Giani <dv@pseudoterminal.org>
+---
+ src/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index fa3a61c..fb172b2 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,4 +1,4 @@
+-SUBDIRS = vmeta ippACelements ippJPelements ippSPelements ippVCelements ippWMelements
++SUBDIRS = vmeta #ippACelements ippJPelements ippSPelements ippVCelements ippWMelements
+ #SUBDIRS = vmeta ippACelements ippJPelements ippSPelements ippVCelements ippWMelements baseVSelements
+ 
+ #EXTRA_DIST = autogen.sh gst-autogen.sh
+-- 
+1.7.9.5
+
