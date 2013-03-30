@@ -1,0 +1,103 @@
+From 13879d43ff9178167a2fca1a366069841a59d787 Mon Sep 17 00:00:00 2001
+From: Carlos Rafael Giani <dv@pseudoterminal.org>
+Date: Thu, 21 Mar 2013 12:01:53 +0100
+Subject: [PATCH] autoconf related fixes:
+
+* added xorg-server M4 script locally, since it is often missing
+* patched configure.ac and Makefile.am to make use of local M4 script
+* AM_CONFIG_HEADER is obsolete, replaced with AC_CONFIG_HEADERS
+
+Change-Id: Ia6cc5a47c5716af458a5fe1bbb1db65f2bd4844a
+Signed-off-by: Carlos Rafael Giani <dv@pseudoterminal.org>
+---
+ Makefile.am       |  1 +
+ configure.ac      |  4 +++-
+ m4/xorg-server.m4 | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 1 deletion(-)
+ create mode 100644 m4/xorg-server.m4
+
+diff --git a/Makefile.am b/Makefile.am
+index 7052905..3149d92 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -20,3 +20,4 @@
+ 
+ AUTOMAKE_OPTIONS = foreign
+ SUBDIRS = src man
++ACLOCAL_AMFLAGS = -I m4
+diff --git a/configure.ac b/configure.ac
+index b093270..0e9bbe6 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -26,8 +26,10 @@ AC_INIT([xf86-video-mrvl],
+         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
+         xf86-video-mrvl)
+ 
++AC_CONFIG_MACRO_DIR([m4])
++
+ AC_CONFIG_SRCDIR([Makefile.am])
+-AM_CONFIG_HEADER([config.h])
++AC_CONFIG_HEADERS([config.h])
+ AC_CONFIG_AUX_DIR(.)
+ 
+ AM_INIT_AUTOMAKE([dist-bzip2])
+diff --git a/m4/xorg-server.m4 b/m4/xorg-server.m4
+new file mode 100644
+index 0000000..040fdb8
+--- /dev/null
++++ b/m4/xorg-server.m4
+@@ -0,0 +1,51 @@
++dnl Copyright 2005 Red Hat, Inc
++dnl 
++dnl Permission to use, copy, modify, distribute, and sell this software and its
++dnl documentation for any purpose is hereby granted without fee, provided that
++dnl the above copyright notice appear in all copies and that both that
++dnl copyright notice and this permission notice appear in supporting
++dnl documentation.
++dnl 
++dnl The above copyright notice and this permission notice shall be included
++dnl in all copies or substantial portions of the Software.
++dnl 
++dnl THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
++dnl OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++dnl MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
++dnl IN NO EVENT SHALL THE OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR
++dnl OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++dnl ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++dnl OTHER DEALINGS IN THE SOFTWARE.
++dnl 
++dnl Except as contained in this notice, the name of the copyright holders shall
++dnl not be used in advertising or otherwise to promote the sale, use or
++dnl other dealings in this Software without prior written authorization
++dnl from the copyright holders.
++dnl 
++
++# XORG_DRIVER_CHECK_EXT()
++# --------------------------
++# Checks for the $1 define in xorg-server.h (from the sdk).  If it
++# is defined, then add $1 to $REQUIRED_MODULES.
++
++m4_pattern_allow(PKG_CONFIG_SYSROOT_DIR)
++
++AC_DEFUN([XORG_DRIVER_CHECK_EXT],[
++	AC_REQUIRE([PKG_PROG_PKG_CONFIG])
++	SAVE_CFLAGS="$CFLAGS"
++	CFLAGS="$CFLAGS -I$PKG_CONFIG_SYSROOT_DIR`$PKG_CONFIG --variable=sdkdir xorg-server`"
++	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
++#include "xorg-server.h"
++#if !defined $1
++#error $1 not defined
++#endif
++		]])],
++		[_EXT_CHECK=yes],
++		[_EXT_CHECK=no])
++	CFLAGS="$SAVE_CFLAGS"
++	AC_MSG_CHECKING([if $1 is defined])
++	AC_MSG_RESULT([$_EXT_CHECK])
++	if test "$_EXT_CHECK" != no; then
++		REQUIRED_MODULES="$REQUIRED_MODULES $2"
++	fi
++])
+-- 
+1.8.2
+
