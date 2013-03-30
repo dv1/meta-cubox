@@ -1,0 +1,6 @@
+echo ======== Setting bootargs ========
+setenv bootargs 'console=ttyS0,115200n8 root=/dev/mmcblk0p1 rw vmalloc=384M video=dovefb:lcd0:1280x720-32@60-edid clcd.lcd0_enable=1 clcd.lcd1_enable=0 usb0Mode=host usb1Mode=host'
+echo ======== Loading kernel ========
+ext2load mmc 0:1 0x00200000 /boot/uImage
+echo ======== Booting kernel ========
+bootm
