@@ -1,0 +1,28 @@
+diff --git a/Makefile_general b/Makefile_general
+index 3132a25..9e3bf33 100755
+--- a/Makefile_general
++++ b/Makefile_general
+@@ -30,20 +30,20 @@ bmm_test_obj=${bmm_test_src:.c=.o}
+ 	uninstall-host uninstall-target
+ 
+ .c.o:
+-	${CC} -fPIC -o $@ -c $<
++	${CC} ${CFLAGS} -fPIC -DPIC -o $@ -c $<
+ 
+ all: compile install-host install-target 
+ 
+ compile: bmm_test libbmm.so libbmm.a
+ 
+ bmm_test: libbmm.so.$(ABI_VERSION) ${bmm_test_obj}
+-	${CC} -o $@ ${bmm_test_obj} -L. -lbmm
++	${CC} ${LDFLAGS} -o $@ ${bmm_test_obj} -L. -lbmm
+ 
+ libbmm.a: ${bmm_lib_obj}
+ 	${AR} -rcs $@ ${bmm_lib_obj}
+ 
+ libbmm.so.$(ABI_VERSION): ${bmm_lib_obj}
+-	${CC} -g -s -shared -Wl,-soname,$@ -o $@.$(ABI_REVISION) ${bmm_lib_obj}
++	${CC} ${LDFLAGS} -shared -Wl,-soname,$@ -o $@.$(ABI_REVISION) ${bmm_lib_obj}
+ 	ln -s $@.$(ABI_REVISION) $@
+ 	ln -s $@.$(ABI_REVISION) libbmm.so
+ 
