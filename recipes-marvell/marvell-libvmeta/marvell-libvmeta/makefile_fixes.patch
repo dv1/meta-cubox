@@ -1,0 +1,22 @@
+diff --git a/Makefile b/Makefile
+index f2e2afc..7d2c454 100755
+--- a/Makefile
++++ b/Makefile
+@@ -22,7 +22,7 @@ vmeta_lib_obj=${vmeta_lib_src:.c=.o}
+ 	uninstall-host uninstall-target
+ 
+ .c.o:
+-	${CC} -fPIC -o $@ -c $<
++	${CC} ${CFLAGS} -fPIC -DPIC -o $@ -c $<
+ 
+ all: compile install-host install-target 
+ 
+@@ -32,7 +32,7 @@ libvmeta.a: ${vmeta_lib_obj}
+ 	${AR} -rcs $@ ${vmeta_lib_obj}
+ 
+ libvmeta.so: ${vmeta_lib_obj}
+-	${CC} -g -s -shared -Wl,-soname,$@ -o $@ ${vmeta_lib_obj} -lbmm
++	${CC} ${LDFLAGS} -shared -Wl,-soname,$@ -o $@ ${vmeta_lib_obj} -lbmm
+ 
+ clean: clean-local
+ 
