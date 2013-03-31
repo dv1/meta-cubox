@@ -1,5 +1,9 @@
 IMAGE_FEATURES += "package-management ssh-server-dropbear x11-base"
 
+LICENSE = "MIT"
+
+inherit core-image
+
 COMMERCIAL_FLAGGED_PACKAGES = " \
 	gst-plugins-ugly-meta \
         gst-ffmpeg \
@@ -7,7 +11,7 @@ COMMERCIAL_FLAGGED_PACKAGES = " \
 	gst-fluendo-mp3 \
 "
 
-CORE_IMAGE_EXTRA_INSTALL = " \
+IMAGE_INSTALL += " \
         gstreamer \
         gst-plugins-base-meta \
         gst-plugins-good-meta \
@@ -21,10 +25,6 @@ CORE_IMAGE_EXTRA_INSTALL = " \
 "
 
 IMAGE_LINGUAS = " "
-
-LICENSE = "MIT"
-
-inherit core-image
 
 
 copy_uimage_and_bootscript() {
