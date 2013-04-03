@@ -24,18 +24,18 @@ then add to bblayers.conf the path to your local copy of meta-cubox.
 
 Then, add to local.conf:
 
-    MACHINE ?= "cubox"
+    MACHINE = "cubox"
 
 This layer adds two values to the list of available tunes:
 
-* `marvellpj4` (for softfp builds)
-* `marvellpj4hf` (for hardfp builds)
+* `marvellpj4`
+* `marvellpj4hf` (marvellpj4 with hardfp mode)
 
 These add compiler flags for Marvell's PJ4 processor, and are based on the armv7a
-tunes. `marvellpj4hf` is used by default. To explicitely set one of these, add
-it to the local conf. Here is an example of a line in local.conf for softfp builds:
+tunes. To explicitely set one of these, add it to the local.conf file. Here is an
+example of a line in local.conf for hardfp builds:
 
-    DEFAULTTUNE ?= "marvellpj4"
+    DEFAULTTUNE_cubox = "marvellpj4hf"
 
 For the rest, follow the building guidelines of the distro of your choice.
 
