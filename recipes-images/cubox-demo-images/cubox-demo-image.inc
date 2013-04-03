@@ -22,6 +22,9 @@ IMAGE_INSTALL += " \
 	marvell-libvmeta \
         gst-plugins-marvell \
         gst-plugins-bmmxv \
+	alsa-lib \
+	alsa-conf \
+	alsa-utils \
 "
 
 IMAGE_LINGUAS = " "
