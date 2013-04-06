@@ -23,6 +23,10 @@ PR = "r2"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 do_configure_prepend() {
-	install -m 0644 ${S}/arch/${ARCH}/configs/${KERNEL_DEFCONFIG} ${WORKDIR}/defconfig || die "No default configuration for ${MACHINE} / ${KERNEL_DEFCONFIG} available."
+	if [ ! -f ${WORKDIR}/defconfig ]
+	then
+		bbnote "No ${WORKDIR}/defconfig file found - using default cubox_defconfig"
+		install -m 0644 ${S}/arch/${ARCH}/configs/${KERNEL_DEFCONFIG} ${WORKDIR}/defconfig || die "No default configuration for ${MACHINE} / ${KERNEL_DEFCONFIG} available."
+	fi
 }
 
