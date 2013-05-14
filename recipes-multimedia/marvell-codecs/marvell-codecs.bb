@@ -14,14 +14,14 @@ VMETA_HARDFP_URI = "http://download.solid-run.com/pub/solidrun/cubox/packages/ma
 
 
 python () {
-	# Append extra packages with hardfp binaries if callconvention-hard is present in the TUNE_FEATURES
-	if base_contains('TUNE_FEATURES', 'callconvention-hard', True, False, d):
-		d.appendVar('SRC_URI', ' ' + d.getVar('LIBMISCGEN_HARDFP_URI', True))
-		d.appendVar('SRC_URI[libmiscgen.md5sum]', ' c7f22deed01b803d7a0d9cef9d996ee1')
-		d.appendVar('SRC_URI[libmiscgen.sha256sum]', ' 590580f3e83612ce2f23d0770281951f3d84bf0f50fb2138d1ed15e0c79a1699')
-		d.appendVar('SRC_URI', ' ' + d.getVar('VMETA_HARDFP_URI', True))
-		d.appendVar('SRC_URI[vmetacodec.md5sum]', ' 30eb47cd675c81c4e6ee0858d1fbc3a7')
-		d.appendVar('SRC_URI[vmetacodec.sha256sum]', ' f3d2c37b587e638670127ec227056878a0717ace8a646d7eee7c4f67e5b9506e')
+    # Append extra packages with hardfp binaries if callconvention-hard is present in the TUNE_FEATURES
+    if base_contains('TUNE_FEATURES', 'callconvention-hard', True, False, d):
+        d.appendVar('SRC_URI', ' ' + d.getVar('LIBMISCGEN_HARDFP_URI', True))
+        d.setVarFlag('SRC_URI', 'libmiscgen.md5sum', 'c7f22deed01b803d7a0d9cef9d996ee1')
+        d.setVarFlag('SRC_URI', 'libmiscgen.sha256sum', '590580f3e83612ce2f23d0770281951f3d84bf0f50fb2138d1ed15e0c79a1699')
+        d.appendVar('SRC_URI', ' ' + d.getVar('VMETA_HARDFP_URI', True))
+        d.setVarFlag('SRC_URI', 'vmetacodec.md5sum', '30eb47cd675c81c4e6ee0858d1fbc3a7')
+        d.setVarFlag('SRC_URI', 'vmetacodec.sha256sum', 'f3d2c37b587e638670127ec227056878a0717ace8a646d7eee7c4f67e5b9506e')
 }
 
 do_unpack[postfuncs] += "unpack_subpackage"
