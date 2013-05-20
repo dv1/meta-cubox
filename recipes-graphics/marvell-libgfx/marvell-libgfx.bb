@@ -61,6 +61,8 @@ do_install() {
 	install -m 0644 ${S}/include/VG/* ${D}${includedir}/VG
 	install -m 0755 ${S}/${LIBGFX_DIR}/${lib}/*.so "${D}${libdir}"
 
+	rm -f "${D}${libdir}/libdirectfb_gal.so"
+
 	# Creating symlink, since many packages assume the existence of a "libGLESv2.so"
 	cd "${D}${libdir}"
 	ln -s "libGLESv2x.so" "libGLESv2.so"
