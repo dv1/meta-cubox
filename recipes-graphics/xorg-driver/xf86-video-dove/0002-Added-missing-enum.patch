@@ -1,0 +1,37 @@
+From c833e97577da16ff58023c682957b226e3ffd204 Mon Sep 17 00:00:00 2001
+From: Carlos Rafael Giani <dv@pseudoterminal.org>
+Date: Mon, 20 May 2013 20:03:07 +0200
+Subject: [PATCH] Added missing enum
+
+(for unknown reasons, it is not included in the libgfx headers)
+
+Signed-off-by: Carlos Rafael Giani <dv@pseudoterminal.org>
+---
+ src/mrvl_exa_driver.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/src/mrvl_exa_driver.c b/src/mrvl_exa_driver.c
+index 0ddd7da..4371519 100644
+--- a/src/mrvl_exa_driver.c
++++ b/src/mrvl_exa_driver.c
+@@ -20,6 +20,17 @@
+ #include "dovefb_driver.h"
+ #include "mrvl_exa_utils.h"
+ 
++typedef enum _gceHARDWARE_TYPE
++{
++    gcvHARDWARE_INVALID = 0x00,
++    gcvHARDWARE_3D      = 0x01,
++    gcvHARDWARE_2D      = 0x02,
++    gcvHARDWARE_VG      = 0x04,
++
++    gcvHARDWARE_3D2D    = gcvHARDWARE_3D | gcvHARDWARE_2D
++}
++gceHARDWARE_TYPE;
++
+ #define MRVL_EXA_PITCH_CHECK(pitch) (((pitch) >= 0x4000) || ((pitch) & 0x001F))
+ #define MRVL_EXA_OFFSET_CHECK(offset) ((offset) & 0x3F)
+ 
+-- 
+1.8.2.3
+

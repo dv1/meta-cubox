@@ -5,16 +5,14 @@ DESCRIPTION = "X.Org driver for the Marvell Dove (Armada 500 series) platform"
 SECTION = "graphics"
 LICENSE = "MIT"
 
-SRC_URI = "git://dev.laptop.org/users/jnettlet/xf86-video-dove"
-SRCREV = "dff96b72cd5b68e64e90ea36c20b58c0e1281f62"
+SRC_URI = "git://dev.laptop.org/projects/xf86-video-dove"
+SRCREV = "b08f0c2daa455bcdfd4d964c12cc3107a6a05a9b"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=e4ef7bc55bbdff56a9bf77007659c9ac"
 
 DEPENDS += "marvell-libgfx"
 
-# the version number is not entirely clear; both 0.1.0 and 0.3.4 are mentioned
-# assuming 0.1.0 since this was the number jnettlet used
-PV = "0.1.0+git${SRCPV}"
+PV = "0.9.3+git${SRCPV}"
 PR = "r1"
 
 S = "${WORKDIR}/git"
@@ -46,9 +44,19 @@ CFLAGS += " \
 	-DMRVL_CRTC_SUPPORT_ROTATION=1 \
 	-DMRVL_PLATFORM_INFO=1 \
 	-I${STAGING_INCDIR}/HAL \
+	-I${S} \
 "
 
 SRC_URI += " \
 	file://0001-autoconf-related-fixes.patch \
+	file://0002-Added-missing-enum.patch \
+	file://mibstore.h \
 "
+
+do_compile[prefuncs] += "copy_mibstore_header"
+
+
+copy_mibstore_header() {
+	cp "${WORKDIR}/mibstore.h" "${S}/mibstore.h"
+}
 
