@@ -3,7 +3,7 @@ require linux.inc
 DESCRIPTION = "Linux kernel for the CuBox device"
 
 SRC_URI = "git://github.com/rabeeh/linux.git;protocol=git;branch=master"
-SRCREV = "24b03f88d3eaee1aabfdfcae8387e0576c67d1c2"
+SRCREV = "496e29045d7f18a438c1cf05a9afeb47d51b2e6f"
 S = "${WORKDIR}/git"
 
 LINUX_VERSION ?= "3.6.9"
@@ -14,7 +14,7 @@ KERNEL_DEFCONFIG = "cubox_defconfig"
 
 PARALLEL_MAKEINST = ""
 
-PR = "r3"
+PR = "r4"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 do_configure_prepend() {
