@@ -6,7 +6,7 @@ SECTION = "graphics"
 LICENSE = "MIT"
 
 SRC_URI = "git://dev.laptop.org/projects/xf86-video-dove"
-SRCREV = "b08f0c2daa455bcdfd4d964c12cc3107a6a05a9b"
+SRCREV = "6cdb7052020f548054191f20f9a9af990b5a7cad"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=e4ef7bc55bbdff56a9bf77007659c9ac"
 
