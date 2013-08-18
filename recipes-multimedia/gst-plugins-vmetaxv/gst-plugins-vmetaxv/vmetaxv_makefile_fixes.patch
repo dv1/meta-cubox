@@ -1,0 +1,27 @@
+diff --git a/Makefile b/Makefile
+index 9eb951e..4471a39 100644
+--- a/Makefile
++++ b/Makefile
+@@ -6,15 +6,15 @@ GSTV_CFLAGS=$(shell pkg-config --cflags --libs gstreamer-video-0.10)
+ X_CFLAGS=$(shell pkg-config --cflags --libs x11)
+ XV_CFLAGS=$(shell pkg-config --cflags --libs xv)
+ 
+-CFLAGS+=-DPACKAGE=\"$(PACKAGE)\" -DVERSION=\"$(VERSION)\"
+-CFLAGS+=-DGST_LICENSE=\"LGPL\"
+-CFLAGS+=-DGST_PACKAGE_NAME=\"GStreamer\ vMetaXv\ plugin\"
+-CFLAGS+=-DGST_PACKAGE_ORIGIN=\"OLPC/Marvell\"
+-CFLAGS+=-DHAVE_XSHM -lm -lphycontmem
+-CFLAGS+=$(GSTI_CFLAGS) $(GSTV_CFLAGS) $(X_CFLAGS) $(XV_CFLAGS)
++EXTRA_CFLAGS+=-DPACKAGE=\"$(PACKAGE)\" -DVERSION=\"$(VERSION)\"
++EXTRA_CFLAGS+=-DGST_LICENSE=\"LGPL\"
++EXTRA_CFLAGS+=-DGST_PACKAGE_NAME=\"GStreamer\ vMetaXv\ plugin\"
++EXTRA_CFLAGS+=-DGST_PACKAGE_ORIGIN=\"OLPC/Marvell\"
++EXTRA_CFLAGS+=-DHAVE_XSHM -lm -lphycontmem
++EXTRA_CFLAGS+=$(GSTI_CFLAGS) $(GSTV_CFLAGS) $(X_CFLAGS) $(XV_CFLAGS)
+ 
+ libgstvmetaxvimagesink.so: vmetaxvimagesink.c
+-	gcc $(CFLAGS) -fPIC -shared $^ -o $@
++	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(LDFLAGS) -fPIC -shared $^ -o $@
+ 
+ clean:
+ 	rm -f libgstvmetaxvimagesink.so
